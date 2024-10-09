@@ -1,0 +1,51 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="maui_training.PhotoPage">
+
+  <ContentPage.Content>
+    <Grid>
+
+      <VisualStateManager.VisualStateGroups>
+        <VisualStateGroup x:Name="OrientationStates">
+          
+          <VisualState x:Name="Portrait">
+            <VisualState.Setters>
+              <Setter Property="Grid.RowDefinitions">
+                <RowDefinitionCollection>
+                  <RowDefinition Height="*" />
+                  <RowDefinition Height="Auto" />
+                </RowDefinitionCollection>
+              </Setter>
+              <Setter Property="Grid.ColumnDefinitions">
+                <ColumnDefinitionCollection>
+                  <ColumnDefinition Width="*" />
+                </ColumnDefinitionCollection>
+              </Setter>
+            </VisualState.Setters>
+          </VisualState>
+          
+          <VisualState x:Name="Landscape">
+            <VisualState.Setters>
+              <Setter Property="Grid.RowDefinitions">
+                <RowDefinitionCollection>
+                  <RowDefinition Height="*" />
+                </RowDefinitionCollection>
+              </Setter>
+              <Setter Property="Grid.ColumnDefinitions">
+                <ColumnDefinitionCollection>
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="Auto" />
+                </ColumnDefinitionCollection>
+              </Setter>
+            </VisualState.Setters>
+          </VisualState>
+          
+        </VisualStateGroup>
+      </VisualStateManager.VisualStateGroups>
+
+      <Button Text="Take Photo"
+                    Grid.Row="1"
+                    Clicked="OnTakePhotoButtonClicked" />
+    </Grid>
+  </ContentPage.Content>
+</ContentPage>
