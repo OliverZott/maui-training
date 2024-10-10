@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace maui_training;
+namespace maui_training.Helpers;
 
 public static class PhonewordTranslator
 {

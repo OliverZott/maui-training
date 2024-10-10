@@ -1,4 +1,7 @@
-# README
+﻿# README
+
+Install logcat or other extended loggin tool for vs 2022 
+
 
 [Microsoft MAUI Tutorial](https://learn.microsoft.com/en-us/training/paths/build-apps-with-dotnet-maui/)
 
@@ -14,7 +17,7 @@
 - `MainPage.xaml.cs` code-behind file, containing the logic for user interactions and UI updates
 - `MainPageViewModel.cs` view model for the main page
 
-- `MauiProgram.cs`  file to configure services, middleware, and other app-level settings. It�s similar to the Startup.cs file in ASP.NET Core and  entry point for the application. All platform-specific code calls the CreateMauiApp method of the static MauiProgram class in the end! You also register your services to **IoC/DI container** here `builder.Services.AddSingleton<IMyService, MyService>();`
+- `MauiProgram.cs`  file to configure services, middleware, and other app-level settings. It’s similar to the Startup.cs file in ASP.NET Core and  entry point for the application. All platform-specific code calls the CreateMauiApp method of the static MauiProgram class in the end! You also register your services to **IoC/DI container** here `builder.Services.AddSingleton<IMyService, MyService>();`
 
 At runtime, the app starts up in a platform-specific way and when initialization is complete, the platform-specific code calls the `MauiProgram.CreateMauiApp` method, which then creates and runs the `App` object
 
@@ -59,3 +62,78 @@ Controls are positioned in a layout. A layout defines the rules by which the con
 - `AbsoluteLayout` exact coordinates for controls
 - `FlexLayout` enables you to wrap the child controls it contains if they don't fit in a single row or column
 - `Grid`
+
+### Simple Porject structure
+
+```
+MyApp/
+│
+├── App.xaml
+├── App.xaml.cs
+├── MainPage.xaml
+├── MainPage.xaml.cs
+│
+├── Views/
+│   ├── Pages/
+│   │   ├── HomePage.xaml
+│   │   ├── HomePage.xaml.cs
+│   │   ├── SettingsPage.xaml
+│   │   ├── SettingsPage.xaml.cs
+│   │
+│   ├── Controls/
+│       ├── CustomButton.xaml
+│       ├── CustomButton.xaml.cs
+│
+├── ViewModels/
+│   ├── HomeViewModel.cs
+│   ├── SettingsViewModel.cs
+│
+├── Models/
+│   ├── UserModel.cs
+│   ├── SettingsModel.cs
+│
+├── Services/
+│   ├── ApiService.cs
+│   ├── LocalStorageService.cs
+│
+├── Helpers/
+│   ├── NavigationHelper.cs
+│   ├── FileHelper.cs
+│
+└── Resources/
+    ├── Styles/
+    │   ├── Styles.xaml
+    ├── Images/
+    │   ├── logo.png
+    ├── Fonts/
+        ├── customfont.ttf
+```
+
+- **Root** Folder
+  - App.xaml / App.xaml.cs: Main application class
+  - MainPage.xaml / MainPage.xaml.cs: Main page of the app.
+- **Views**: Contains XAML files for UI components
+  - Pages: For full pages
+      - HomePage.xaml / HomePage.xaml.
+      - SettingsPage.xaml / SettingsPage.xaml.cs
+- **Controls**: For reusable UI components.
+  - CustomButton.xaml / CustomButton.xaml.cs
+- **ViewModels**: Contains ViewModel classes for MVVM pattern.
+    - HomeViewModel.cs
+    - SettingsViewModel.cs
+- **Models**: Contains data model classes.
+  - UserModel.cs
+  - SettingsModel.cs
+- **Services**: Contains service classes for data access, APIs, etc
+  - ApiService.cs
+  - LocalStorageService.cs
+- **Helpers**: Contains helper classes and utilities.
+    - NavigationHelper.
+    - FileHelper.cs
+- **Resources**: Contains application resources like styles, templates, images, etc
+  - Styles
+    - Styles.xaml
+  - Images
+    - logo.png
+  - Fonts
+    - customfont.ttf

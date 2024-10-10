@@ -63,7 +63,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="PhotoPage.xaml">
+	  <MauiXaml Update="Views\Pages\PhoneWordDialer.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Pages\PhotoPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
@@ -72,6 +75,13 @@
 	  <None Update="PhotoPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </None>
+	  <None Update="Views\Pages\PhoneWordDialer.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Views\Controls\" />
 	</ItemGroup>
 
 </Project>
