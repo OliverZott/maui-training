@@ -1,6 +1,8 @@
+using Microsoft.Maui.Controls.PlatformConfiguration;
+
 namespace maui_training;
 
-// TODO permission check for storage read / write
+//https://stackoverflow.com/questions/78553991/android-13-how-to-save-image-in-galery-net-maui
 
 
 public partial class PhotoPage : ContentPage
@@ -31,9 +33,6 @@ public partial class PhotoPage : ContentPage
 
     private async void OnTakePhotoButtonClicked(object sender, EventArgs e)
     {
-
-        // functionality to check all permissions
-
         var status = await CheckAndRequestCameraPermission();
         if (status == PermissionStatus.Granted)
         {
@@ -42,17 +41,53 @@ public partial class PhotoPage : ContentPage
                 var photo = await MediaPicker.Default.CapturePhotoAsync();
                 if (photo != null)
                 {
+                    //var statusReadPermission = await Permissions.CheckStatusAsync<Permissions.StorageRead>();
+                    //var statusWritePermission = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
 
-                    var statusReadPermission = await Permissions.CheckStatusAsync<Permissions.StorageRead>();
-                    var statusWritePermission = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
-                    // Do something with the photo, e.g., display it or save it
-                    var stream = await photo.OpenReadAsync();
-                    // Process the stream
-                    var filePath = Path.Combine(FileSystem.AppDataDirectory, "capturedPhoto.jpg");
-                    using (var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
-                    {
-                        await stream.CopyToAsync(fileStream);
-                    }
+                    string cacheDir = FileSystem.Current.CacheDirectory;
+                    string appDataDir = FileSystem.Current.AppDataDirectory;
+
+                    var mediaPermissionStatus = await Permissions.CheckStatusAsync<Permissions.Media>();
+
+                    var commonPictures = Environment.GetFolderPath(Environment.SpecialFolder.CommonPictures);
+                    var myPictures = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+
+
+                    var uniqueFileName = $"{DateTime.Now:yyyyMMdd_HHmmss}.jpg";
+                    var photoStoragePath = Path.Combine(myPictures, uniqueFileName);
+
+
+#if ANDROID
+                    var visiblePath = Android.App.Application.Context.GetExternalFilesDir(Android.OS.Environment.DirectoryDocuments).AbsoluteFile.Path.ToString();
+                    var storagePath = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDownloads).AbsolutePath;
+                    var storagePath2 = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryPictures).AbsolutePath;
+                    var docsDirectory = Android.App.Application.Context.GetExternalFilesDir(Android.OS.Environment.DirectoryDocuments);
+                    
+                    string localFilePath = Path.Combine(storagePath2, uniqueFileName);
+                
+                    using var sourceStream = await photo.OpenReadAsync();
+                    using var localFileStream = File.OpenWrite(localFilePath);  
+
+                    await sourceStream.CopyToAsync(localFileStream);
+
+#endif
+
+
+
+
+
+
+
+
+
+                    //// save photo                         
+                    //string localFilePath = Path.Combine(FileSystem.AppDataDirectory, "photo.jpg");     // photo.
+
+                    //using var sourceStream = await photo.OpenReadAsync();
+                    //using var localFileStream = File.OpenWrite(photoStoragePath);   // localFilePath
+                    ////using var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write);  // more control but more complex
+
+                    //await sourceStream.CopyToAsync(localFileStream);
                 }
             }
             catch (Exception ex)
