@@ -1,8 +1,7 @@
-using Microsoft.Maui.Controls.PlatformConfiguration;
+using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Storage;
 
-namespace maui_training;
-
-//https://stackoverflow.com/questions/78553991/android-13-how-to-save-image-in-galery-net-maui
+namespace maui_training.Views.Pages;
 
 
 public partial class PhotoPage : ContentPage
@@ -10,6 +9,7 @@ public partial class PhotoPage : ContentPage
     public PhotoPage()
     {
         InitializeComponent();
+
         DeviceDisplay.MainDisplayInfoChanged += OnMainDisplayInfoChanged;
         UpdateOrientationState(DeviceDisplay.MainDisplayInfo.Orientation);
     }
@@ -41,46 +41,59 @@ public partial class PhotoPage : ContentPage
                 var photo = await MediaPicker.Default.CapturePhotoAsync();
                 if (photo != null)
                 {
-                    //var statusReadPermission = await Permissions.CheckStatusAsync<Permissions.StorageRead>();
-                    //var statusWritePermission = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
-
-                    string cacheDir = FileSystem.Current.CacheDirectory;
-                    string appDataDir = FileSystem.Current.AppDataDirectory;
-
+                    var statusReadPermission = await Permissions.CheckStatusAsync<Permissions.StorageRead>();
+                    var statusWritePermission = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
                     var mediaPermissionStatus = await Permissions.CheckStatusAsync<Permissions.Media>();
 
-                    var commonPictures = Environment.GetFolderPath(Environment.SpecialFolder.CommonPictures);
-                    var myPictures = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+                    //var cacheDir = FileSystem.Current.CacheDirectory;
+                    //var appDataDir = FileSystem.Current.AppDataDirectory;
+                    //var commonPictures = Environment.GetFolderPath(Environment.SpecialFolder.CommonPictures);    
+                    //var myPictures = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
 
+
+
+                    // ###################################################################################################### 
 
                     var uniqueFileName = $"{DateTime.Now:yyyyMMdd_HHmmss}.jpg";
-                    var photoStoragePath = Path.Combine(myPictures, uniqueFileName);
+                    //var photoStoragePath = Path.Combine(myPictures, uniqueFileName);
 
-
-#if ANDROID
-                    var visiblePath = Android.App.Application.Context.GetExternalFilesDir(Android.OS.Environment.DirectoryDocuments).AbsoluteFile.Path.ToString();
-                    var storagePath = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDownloads).AbsolutePath;
-                    var storagePath2 = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryPictures).AbsolutePath;
-                    var docsDirectory = Android.App.Application.Context.GetExternalFilesDir(Android.OS.Environment.DirectoryDocuments);
-                    
-                    string localFilePath = Path.Combine(storagePath2, uniqueFileName);
-                
+                    var cancellationToken = new CancellationToken();
                     using var sourceStream = await photo.OpenReadAsync();
-                    using var localFileStream = File.OpenWrite(localFilePath);  
 
-                    await sourceStream.CopyToAsync(localFileStream);
+                    //using var stream = new MemoryStream(Encoding.Default.GetBytes("Hello from the Community Toolkit!"));
+                    var fileSaverResult = await FileSaver.Default.SaveAsync(uniqueFileName, sourceStream, cancellationToken);
+                    if (fileSaverResult.IsSuccessful)
+                    {
+                        await Toast.Make($"The file was saved successfully to location: {fileSaverResult.FilePath}").Show(cancellationToken);
+                    }
+                    else
+                    {
+                        await Toast.Make($"The file was not saved successfully with error: {fileSaverResult.Exception.Message}").Show(cancellationToken);
+                    }
 
-#endif
 
 
 
 
+                    //// ######################################################################################################     
+                    //#if ANDROID
+                    //                    var visiblePath = Android.App.Application.Context.GetExternalFilesDir(Android.OS.Environment.DirectoryDocuments).AbsoluteFile.Path.ToString();
+                    //                    var storagePath = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDownloads).AbsolutePath;
+                    //                    var storagePath2 = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryPictures).AbsolutePath;
+                    //                    var docsDirectory = Android.App.Application.Context.GetExternalFilesDir(Android.OS.Environment.DirectoryDocuments);
+
+                    //                    string localFilePath = Path.Combine(storagePath2, uniqueFileName);
+
+                    //                    using var sourceStream = await photo.OpenReadAsync();
+                    //                    using var localFileStream = File.OpenWrite(localFilePath);  
+
+                    //                    await sourceStream.CopyToAsync(localFileStream);
+
+                    //#endif
 
 
 
-
-
-                    //// save photo                         
+                    //// ######################################################################################################                       
                     //string localFilePath = Path.Combine(FileSystem.AppDataDirectory, "photo.jpg");     // photo.
 
                     //using var sourceStream = await photo.OpenReadAsync();
@@ -98,6 +111,20 @@ public partial class PhotoPage : ContentPage
         else
         {
             await DisplayAlert("Permission Denied", "Camera permission is required to take photos.", "OK");
+        }
+    }
+
+    async Task SaveFile(CancellationToken cancellationToken, string fileName, Stream stream)
+    {
+        //using var stream = new MemoryStream(Encoding.Default.GetBytes("Hello from the Community Toolkit!"));
+        var fileSaverResult = await FileSaver.Default.SaveAsync(fileName, stream, cancellationToken);
+        if (fileSaverResult.IsSuccessful)
+        {
+            await Toast.Make($"The file was saved successfully to location: {fileSaverResult.FilePath}").Show(cancellationToken);
+        }
+        else
+        {
+            await Toast.Make($"The file was not saved successfully with error: {fileSaverResult.Exception.Message}").Show(cancellationToken);
         }
     }
 

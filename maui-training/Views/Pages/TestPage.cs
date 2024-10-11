@@ -1,4 +1,4 @@
-namespace maui_training;
+namespace maui_training.Views.Pages;
 
 public partial class TestPage : ContentPage
 {
@@ -32,7 +32,7 @@ public partial class TestPage : ContentPage
 
         myButton.Clicked += OnCounterClicked;
 
-        this.Content = myScrollView;
+        Content = myScrollView;
     }
 
     private void OnCounterClicked(object sender, EventArgs e)
