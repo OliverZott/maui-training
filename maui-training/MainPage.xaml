@@ -9,10 +9,13 @@
             HorizontalOptions="Center" />
 
         <Button Text="Go to Phone Translation Page" 
+                Margin="5"
                 Clicked="OnPhoneButtonClicked"/>
-        <Button Text="Go to Photo-Testing Page" 
+        <Button Text="Go to Photo-Testing Page"
+                Margin="5"
                 Clicked="OnPhotoButtonClicked"/>
         <Button Text="Go to Test Page" 
+                Margin="5"
                 Clicked="OnTestButtonClicked"/>
     </VerticalStackLayout>
 
