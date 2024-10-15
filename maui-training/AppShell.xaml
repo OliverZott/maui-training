@@ -4,12 +4,31 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:maui_training"
+    xmlns:pages="clr-namespace:maui_training.Views.Pages"
     Shell.FlyoutBehavior="Disabled"
     Title="maui_training">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <Shell.TitleView>
+        <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+            <Label Text="Maui Training Dummy App" FontSize="Large" />
+        </StackLayout>
+    </Shell.TitleView>
+
+
+    <TabBar>
+        <ShellContent Title="Home"
+                      ContentTemplate="{DataTemplate local:MainPage}"
+                      Route="MainPage"
+                      Icon="home.png" />
+      
+        <ShellContent Title="Sample Pages"
+                      ContentTemplate="{DataTemplate pages:ExampleNavigationPage}"
+                      Route="ExampleNavigationPage"
+                      Icon="home.png" />
+        <ShellContent Title="Collection Examples"
+                      ContentTemplate="{DataTemplate pages:CollectionExamplePage}"
+                      Route="CollectionExamplePage"
+                      Icon="settings.png" />
+    </TabBar>
 
 </Shell>

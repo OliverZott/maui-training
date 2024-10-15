@@ -5,14 +5,14 @@
 - build solution
 - delete app from android emulator
 
-manual delet app from android emulator:
+manually delet app from android emulator:
 & "C:\Program Files (x86)\Android\android-sdk\platform-tools\adb.exe" -s emulator-5554 uninstall oz.maui.training
 #>
 
 
 # Define the path to your project and solution file
-$projectPath = "D:\Entw\VS22\maui-training\maui-training"
-$solutionPath = "D:\Entw\VS22\maui-training\maui-training.sln"
+$projectPath = "C:\repos\maui-training"
+$solutionPath = "C:\repos\maui-training\maui-training.sln"
 
 
 function Write-Log {
