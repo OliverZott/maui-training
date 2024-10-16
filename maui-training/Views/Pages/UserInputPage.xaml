@@ -4,20 +4,35 @@
              x:Class="maui_training.Views.Pages.UserInputPage"
              Title="UserInputPage">
     
+    
     <StackLayout Padding="10">
+
+        <Label Text="Users in SQLite table" FontSize="28" FontAttributes="Bold" />
+
+        <Label Text="User Information Form" FontSize="18" FontAttributes="Bold"  Margin="0, 30,0,0" />
+        <BoxView HeightRequest="1" Color="Black" HorizontalOptions="FillAndExpand" Margin="0, 10,0,20"  />
+        
         <Entry x:Name="FirstNameEntry" Placeholder="First Name" />
         <Entry x:Name="LastNameEntry" Placeholder="Last Name" />
         <Entry x:Name="AgeEntry" Placeholder="Age" Keyboard="Numeric" />
         <Button Text="Save" Clicked="OnSaveButtonClicked" />
-        
+
+
+
+        <Label Text="Existing Users" FontSize="18" FontAttributes="Bold"  Margin="0, 30,0,0" />
+        <BoxView HeightRequest="1" Color="Black" HorizontalOptions="FillAndExpand" Margin="0, 10,0,10"  />
+
+
         <ListView x:Name="PeopleListView">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <Frame BorderColor="Black" Padding="2" Margin="5">
-                            <StackLayout Orientation="Horizontal" Padding="5">
-                                <Label Text="{Binding FirstName} " />
-                                <Label Text="{Binding LastName} " />
+                        <Frame BorderColor="Black" Padding="1" Margin="2">
+                            <StackLayout Orientation="Horizontal" Padding="5" Margin="5">
+                                <Label Text="{Binding FirstName}"/>
+                                <Label Text=" " FontSize="Medium"/>
+                                <Label Text="{Binding LastName}"/>
+                                <Label Text=" " FontSize="Medium"/>
                                 <Label Text="{Binding Age}" />
                             </StackLayout>
                         </Frame>
