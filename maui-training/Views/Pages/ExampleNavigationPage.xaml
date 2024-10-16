@@ -11,6 +11,10 @@
         VerticalOptions="Center" 
         HorizontalOptions="Center" />
 
+
+        <Button Text="Go to User Input/View Page" 
+                Margin="5"
+                Clicked="OnUserInputButtonClicked"/>
         <Button Text="Go to Phone Translation Page" 
                 Margin="5"
                 Clicked="OnPhoneButtonClicked"/>

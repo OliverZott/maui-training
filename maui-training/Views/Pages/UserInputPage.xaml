@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="maui_training.Views.Pages.UserInputPage"
+             Title="UserInputPage">
+    
+    <StackLayout Padding="10">
+        <Entry x:Name="FirstNameEntry" Placeholder="First Name" />
+        <Entry x:Name="LastNameEntry" Placeholder="Last Name" />
+        <Entry x:Name="AgeEntry" Placeholder="Age" Keyboard="Numeric" />
+        <Button Text="Save" Clicked="OnSaveButtonClicked" />
+        
+        <ListView x:Name="PeopleListView">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Frame BorderColor="Black" Padding="2" Margin="5">
+                            <StackLayout Orientation="Horizontal" Padding="5">
+                                <Label Text="{Binding FirstName} " />
+                                <Label Text="{Binding LastName} " />
+                                <Label Text="{Binding Age}" />
+                            </StackLayout>
+                        </Frame>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+    
+</ContentPage>

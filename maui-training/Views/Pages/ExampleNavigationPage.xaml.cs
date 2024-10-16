@@ -21,4 +21,9 @@ public partial class ExampleNavigationPage : ContentPage
     {
         await Shell.Current.GoToAsync(nameof(TestPage));
     }
+
+    private async void OnUserInputButtonClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync(nameof(UserInputPage));
+    }
 }
