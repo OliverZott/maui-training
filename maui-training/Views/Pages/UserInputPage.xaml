@@ -12,10 +12,10 @@
         <Label Text="User Information Form" FontSize="18" FontAttributes="Bold"  Margin="0, 30,0,0" />
         <BoxView HeightRequest="1" Color="Black" HorizontalOptions="FillAndExpand" Margin="0, 10,0,20"  />
         
-        <Entry x:Name="FirstNameEntry" Placeholder="First Name" />
-        <Entry x:Name="LastNameEntry" Placeholder="Last Name" />
-        <Entry x:Name="AgeEntry" Placeholder="Age" Keyboard="Numeric" />
-        <Button Text="Save" Clicked="OnSaveButtonClicked" />
+        <Entry Text="{Binding FirstName}" Placeholder="First Name (Pflichtfeld)" />
+        <Entry Text="{Binding LastName}" Placeholder="Last Name (Pflichtfeld)" />
+        <Entry Text="{Binding Age}" Placeholder="Age (Pflichtfeld)" Keyboard="Numeric" />
+        <Button Text="Save" Command="{Binding SaveUserCommand}" />
 
 
 
@@ -23,7 +23,7 @@
         <BoxView HeightRequest="1" Color="Black" HorizontalOptions="FillAndExpand" Margin="0, 10,0,10"  />
 
 
-        <ListView x:Name="PeopleListView">
+        <ListView x:Name="PeopleListView" ItemsSource="{Binding Users}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
